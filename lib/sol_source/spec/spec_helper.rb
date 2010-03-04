@@ -1,6 +1,7 @@
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
 require 'spec'
+require 'ruby-debug'
 
 require 'rubygems'
 # this should be:  require 'sol_source'  # gem

@@ -19,7 +19,7 @@ describe McLib do
     
       it "loads transforms" do
         @dna[:transform].should == [
-          Transform::Breather, Transform::Namasca, 
+          Transform::BreathResponse, Transform::Namasca, 
           Transform::Namaste
         ]
       end
