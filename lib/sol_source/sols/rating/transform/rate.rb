@@ -1,9 +1,9 @@
 module Transform
-  class Rate < Breather
+  class Rate < BreathResponse
     def handle_breath
-      rh = @substrate.rating[ b.what ] ||= {}
+      rh = @state.rating[ b.what ] ||= {}
       rh[ b._from ] = @rating
-      @substrate.average_rating[ b.what ] = rh.values.sum / rh.size 
+      @state.average_rating[ b.what ] = rh.values.sum / rh.size 
     end
   end
 end
