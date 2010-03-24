@@ -1,0 +1,18 @@
+sol.rate :breath =>  "{_from} rates {what} as {rating}",
+         :langauge => :en,
+         :parameters => { 
+            :what => :string,
+            :rating => { 
+              :type => :range,
+              :configurable_with => :enumerable_range,
+              :default => ["poor","average","good","excellent"]
+            }
+         }
+
+sol.rating :substrate => { :rating => {}, :average_rating => {} }
+
+sol.rate ( :transform => :handle_breath ) {
+      rh = @state.rating[ b.what ] ||= {}
+      rh[ b._from ] = @rating
+      @state.average_rating[ b.what ] = rh.values.sum / rh.size 
+    }
