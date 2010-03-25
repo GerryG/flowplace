@@ -1,0 +1,50 @@
+
+sol.intend :breath =>  "{_from} intends {what}",
+         :condition => { :state => :start },
+         :parameters => { :what => :intention, }
+
+sol.request :breath => "{_from} proposes to {what} with {intention}",
+         :condition => { :state => :open },
+         :parameters => { :what => :request, :intention => :intention }
+sol.offer :breath => "{_from} offers to {what} for {intention}",
+         :condition => { :state => :open },
+         :parameters => { :what => :agreement, :intention => :intention }
+sol.accept :breath => "{_from} accepts {offer}"
+         :condition => { :from => :declarrer, :state => :open,
+                         :offer_state => :extended }
+sol.counter :breath => "{_from} counters with {what} for {agreement}"
+sol.promise :breath => "{_from} agrees to {proposal}"
+sol.action :breath => "{_from} declares {action} for {what}",
+         :condition => { :state => :promise, :from => :promissor },
+         :parameters => { :action => :action, :what => :agreement }
+
+sol.intention :substrate {
+          :declarer => :sol, # _from of the intends
+          :name => :string,
+          :description => :string,
+          :notes => :string,
+          :offers => [],
+          :proposals => [],
+          :state => :start
+        }
+
+sol.agreement :substrate {
+          :promissor => :sol, # _from of the offer, or _to and requests
+          :name => :string,
+          :description => :string,
+          :notes => :string
+          :state => :start
+        }
+          
+sol.action :substrate {
+          :actor => :sol, # _from of the declare
+          :name => :string,
+          :description => :string,
+          :notes => :string,
+          :state => :start
+        }
+          
+sol.intention ( :transform => :receive_intention ) {
+      intention = substrate(:intention, _from, what);
+      intention.state = :open;
+    }
